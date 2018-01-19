@@ -1,8 +1,5 @@
 version: "3.4"
 networks:
-   proxy:
-    external:
-     name: remoteproxy_proxy
    hostnet:
     external:
      name: host
@@ -18,8 +15,8 @@ services:
     volumes:
       - //var/run/docker.sock:/var/run/docker.sock
       - //opt/portainer:/data
+      - /etc/localtime:/etc/localtime:ro
     networks:
-      - remoteproxy_proxy:
       - hostnet: {}
     deploy:
       placement:
@@ -31,7 +28,7 @@ services:
         delay: 0s
 
   portainer-arm:
-    image: portainer/portainer
+    image: portainer/portainer:arm
     command: -H unix:///var/run/docker.sock
     ports:
       - target: 9000
@@ -40,14 +37,13 @@ services:
     volumes:
       - //var/run/docker.sock:/var/run/docker.sock
       - //opt/portainer:/data
+      - /etc/localtime:/etc/localtime:ro
     networks:
-      - remoteproxy_proxy:
       - hostnet: {}
     deploy:
       placement:
         constraints:
-          - node.role == manager
-          - engine.labels.arch == amd64
+          - engine.labels.arch == arm64
       replicas: 1
       update_config:
         parallelism: 1
