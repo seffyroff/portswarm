@@ -19,7 +19,7 @@ services:
       - //var/run/docker.sock:/var/run/docker.sock
       - //opt/portainer:/data
     networks:
-      -  remoteproxy_proxy
+      - remoteproxy_proxy:
       - hostnet: {}
     deploy:
       placement:
@@ -41,7 +41,7 @@ services:
       - //var/run/docker.sock:/var/run/docker.sock
       - //opt/portainer:/data
     networks:
-      -  remoteproxy_proxy
+      - remoteproxy_proxy:
       - hostnet: {}
     deploy:
       placement:
