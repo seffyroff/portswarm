@@ -17,7 +17,7 @@ services:
       - //opt/portainer:/data
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - hostnet: {}
+      - hostnet
     deploy:
       placement:
         constraints:
@@ -39,7 +39,7 @@ services:
       - //opt/portainer:/data
       - /etc/localtime:/etc/localtime:ro
     networks:
-      - hostnet: {}
+      - hostnet
     deploy:
       placement:
         constraints:
