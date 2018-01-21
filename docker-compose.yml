@@ -1,8 +1,4 @@
 version: "3.4"
-networks:
-   hostnet:
-    external:
-     name: host
 
 services:
   portainer:
@@ -11,40 +7,18 @@ services:
     ports:
       - target: 9000
         published: 9000
-        mode: host
+        mode: ingress
     volumes:
       - //var/run/docker.sock:/var/run/docker.sock
       - //opt/portainer:/data
       - /etc/localtime:/etc/localtime:ro
-    networks:
-      - hostnet
     deploy:
       placement:
         constraints:
         - node.role == manager
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 0s
-
-  portainer-arm:
-    image: portainer/portainer:arm
-    command: -H unix:///var/run/docker.sock
-    ports:
-      - target: 9000
-        published: 9000
-        mode: host
-    volumes:
-      - //var/run/docker.sock:/var/run/docker.sock
-      - //opt/portainer:/data
-      - /etc/localtime:/etc/localtime:ro
-    networks:
-      - hostnet
-    deploy:
-      placement:
-        constraints:
-          - engine.labels.arch == arm64
-      replicas: 1
+      replicas: 2
+      labels:
+      - traefik.port=9000
       update_config:
         parallelism: 1
         delay: 0s
